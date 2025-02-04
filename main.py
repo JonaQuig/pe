@@ -65,24 +65,60 @@ while True:
                 cropped_image.show()
                 return cropped_image
 
+    def spin(image):
+        print(GREEN + "Which way would you like to rotate your image?" + RESET)
+        while True:
+            print("---------------------Options-----------------------")
+            print("1. Left to Right / Right to Left")
+            print("2. Up to Down / Down to Up")
+            print("3. Rotate 90, 180, or 270 degrees")
+            SpinChoice = input()
+
+            if SpinChoice == "1":
+                return image.transpose(Image.FLIP_LEFT_RIGHT)
+            elif SpinChoice == "2":
+                return image.transpose(Image.FLIP_TOP_BOTTOM)
+
+    def scale(image):
+        width, height = image.size
+        while True:
+            print("What would you like your scale factor to be?")
+            scale_factor_input = input()
+            scale_factor = float(scale_factor_input)
+            if scale_factor > 0:
+                new_width = int(width * scale_factor)
+                new_height = int(height * scale_factor)
+                scaled_image = image.resize((new_width, new_height))
+                scaled_image.show()
+                return scaled_image
+            else:
+                print(RED + "Scaling factor must be positive." + RESET)
+        else:
+            print(RED + "Invalid input. Please enter a number." + RESET)
+
+
     if EditChoice == 'Crop':
         ImageChoice = crop(ImageChoice)
 #   if EditChoice == 'Spin':
 #       ImageChoice = spin(ImageChoice)
-#   if EditChoice == 'Enlarge':
-#       ImageChoice = enlarge(ImageChoice)
-#   if EditChoice == 'Shrink':
-#       ImageChoice = shrink(ImageChoice)
+    if EditChoice == 'Enlarge' or EditChoice == 'Shrink':
+        ImageChoice = scale(ImageChoice)
+    else:
+        print(RED + "Invalid choice" + RESET) # It's saying invalid choice when using Crop, fix that!
+
     print("Would you like to continue editing?")
     answer = input()
     if answer == 'yes':
         print(GREEN + "Great!" + RESET)
-    elif answer == 'no':
+    else:
         break
 
 # Minimum Requirements:
 # 	- method for user to select photo       CHECK
-#	- 3 types of edits that could be used
+#	- 3 types of edits that could be used   1 of 3 done!
 #	- changing file type
 #   - manipulate the file at an individual pixel level
 #	(i.e. Swap pixel colors, all red becomes green. Or apply a filter like ‘Enhance’)
+
+# fix and finish scale def
+# fix else statement in scale def
