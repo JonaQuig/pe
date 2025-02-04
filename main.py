@@ -16,29 +16,29 @@ x = 100
 print(BLUE + "Enter \'start\' to begin")
 start = input()
 while x == 100:
-   if start == 'start':
-       PE_Start = 0
-       while PE_Start == 0:
-           # Method for user to select photo
-           print(GREEN + "What image would you like to edit? Buffalo, Elephant, or Bird")
-           IMAGE = input()
-           if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird':
-               print("Good choice!")
-               if IMAGE == 'Buffalo':
-                   ImageChoice = im
-               elif IMAGE == 'Elephant':
-                   ImageChoice = im1
-               elif IMAGE == 'Bird':
-                   ImageChoice = im2
-               PE_Start = 1
-           elif IMAGE != 'Buffalo' and 'Elephant' and 'Bird':
-               print("You can't do that")
-       if x == 100:
-           x += 1
+    if start == 'start':
+        PE_Start = 0
+        while PE_Start == 0:
+            # Method for user to select photo
+            print(GREEN + "What image would you like to edit? Buffalo, Elephant, or Bird")
+            IMAGE = input()
+            if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird':
+                print("Good choice!")
+                if IMAGE == 'Buffalo':
+                    ImageChoice = im
+                elif IMAGE == 'Elephant':
+                    ImageChoice = im1
+                elif IMAGE == 'Bird':
+                    ImageChoice = im2
+                PE_Start = 1
+            elif IMAGE != 'Buffalo' and 'Elephant' and 'Bird':
+                print("You can't do that")
+        if x == 100:
+            x += 1
 ImageChoice.show()
 
+print(RESET + "Now that we have our image, lets make some edits!")
 while True:
-    print(RESET + "Now that we have our image, lets make some edits!")
     print("---------------------EDITS-----------------------")
     print("1. Crop")
     print("2. Spin")
