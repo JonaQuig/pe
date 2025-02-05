@@ -38,15 +38,7 @@ while x == 100:
 ImageChoice.show()
 
 print(RESET + "Now that we have our image, lets make some edits!")
-while True:
-    print("---------------------EDITS-----------------------")
-    print("1. Crop")
-    print("2. Spin")
-    print("3. Enlarge/Shrink")
-
-    EditChoice = input()
-
-    def crop(image):
+def crop(image):
         # Give image size to help user choose crop values/coordinates
         width, height = image.size
         print(f"Image Size: {width} * {height} ")
@@ -65,7 +57,7 @@ while True:
                 cropped_image.show()
                 return cropped_image
 
-    def spin(image):
+def spin(image):
         print(GREEN + "Which way would you like to rotate your image?" + RESET)
         while True:
             print("---------------------Options-----------------------")
@@ -79,46 +71,49 @@ while True:
             elif SpinChoice == "2":
                 return image.transpose(Image.FLIP_TOP_BOTTOM)
 
-    def scale(image):
+def scale(image):
         width, height = image.size
         while True:
             print("What would you like your scale factor to be?")
             scale_factor_input = input()
-            scale_factor = float(scale_factor_input)
-            if scale_factor > 0:
-                new_width = int(width * scale_factor)
-                new_height = int(height * scale_factor)
-                scaled_image = image.resize((new_width, new_height))
-                scaled_image.show()
-                return scaled_image
+            if scale_factor_input.isdigit:
+                scale_factor = float(scale_factor_input)
+                if scale_factor > 0:
+                    new_width = int(width * scale_factor)
+                    new_height = int(height * scale_factor)
+                    scaled_image = image.resize((new_width, new_height))
+                    scaled_image.show()
+                    return scaled_image
+                else:
+                    print(RED + "Wrong input. Is the input positive?" + RESET)
             else:
-                print(RED + "Scaling factor must be positive." + RESET)
-        else:
-            print(RED + "Invalid input. Please enter a number." + RESET)
+                print(RED + "Invalid input. Please enter a number." + RESET)
 
-
+while True:
+    print("---------------------EDITS-----------------------")
+    print("1. Crop")
+    print("2. Spin")
+    print("3. Enlarge/Shrink")
+    EditChoice = input()
     if EditChoice == 'Crop':
         ImageChoice = crop(ImageChoice)
-#   if EditChoice == 'Spin':
-#       ImageChoice = spin(ImageChoice)
-    if EditChoice == 'Enlarge' or EditChoice == 'Shrink':
+    elif EditChoice == 'Spin':
+        ImageChoice = spin(ImageChoice)
+    elif EditChoice == 'Enlarge' or EditChoice == 'Shrink':
         ImageChoice = scale(ImageChoice)
     else:
-        print(RED + "Invalid choice" + RESET) # It's saying invalid choice when using Crop, fix that!
-
+        print(RED + "Invalid choice" + RESET)
     print("Would you like to continue editing?")
     answer = input()
-    if answer == 'yes':
+    if answer.lower() == 'yes':
         print(GREEN + "Great!" + RESET)
     else:
         break
 
+
 # Minimum Requirements:
 # 	- method for user to select photo       CHECK
-#	- 3 types of edits that could be used   1 of 3 done!
+#	- 3 types of edits that could be used   2 of 3 done!
 #	- changing file type
 #   - manipulate the file at an individual pixel level
 #	(i.e. Swap pixel colors, all red becomes green. Or apply a filter like ‘Enhance’)
-
-# fix and finish scale def
-# fix else statement in scale def
