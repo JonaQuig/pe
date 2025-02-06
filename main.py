@@ -22,7 +22,7 @@ while x == 100:
             # Method for user to select photo
             print(GREEN + "What image would you like to edit? Buffalo, Elephant, or Bird")
             IMAGE = input()
-            if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird':
+            if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird' or "custom":
                 print("Good choice!")
                 if IMAGE == 'Buffalo':
                     ImageChoice = im
@@ -30,6 +30,10 @@ while x == 100:
                     ImageChoice = im1
                 elif IMAGE == 'Bird':
                     ImageChoice = im2
+                elif IMAGE == 'custom':
+                    print("What would you like you image to be?")
+                    custom = input()
+                    ImageChoice = custom
                 PE_Start = 1
             elif IMAGE != 'Buffalo' and 'Elephant' and 'Bird':
                 print("You can't do that")
@@ -99,7 +103,6 @@ def filter(image):
             print("Pick one of the options correctly!")
 
 
-image_modified = False
 while True:
     print("---------------------EDITS-----------------------")
     print("1. Crop")
@@ -108,13 +111,10 @@ while True:
     EditChoice = input()
     if EditChoice == 'Crop':
         ImageChoice = crop(ImageChoice)
-        image_modified = True
-    elif EditChoice == 'Enlarge' or EditChoice == 'Shrink':
+    elif EditChoice == "Scale":
         ImageChoice = scale(ImageChoice)
-        image_modified = True
     elif EditChoice == 'Filter':
         ImageChoice = filter(ImageChoice)
-        image_modified = True
     else:
         print(RED + "Invalid choice" + RESET)
     print("Would you like to continue editing?")
@@ -122,38 +122,8 @@ while True:
     if answer.lower() == 'yes':
         print(GREEN + "Great!" + RESET)
     else:
+        print("What would you like your image to be saved as? End with .jpg: eg. name.jpg")
+        SavedName = input()
+        ImageChoice.save(SavedName)
         break
-if image_modified:
-    print(GREEN + "Image has been modified" + RESET)
-else:
-    print("No modifications to image")
 
-
-print("Would you like to save and/or change the image?")
-save_change = input()
-if save_change == "yes":
-    print(GREEN + "Now, lets save and/or change the image!" + RESET)
-    while True:
-        print("Enter name for new, edited image: " + BLUE + "eg. name.jpg or name.png" + RESET)
-        SavedImageName = input()
-        if "." not in SavedImageName:
-            print(RED + "Invalid Name, name must include \'.\': eg. .jpg or .png" + RESET)
-            continue
-
-        file_extension = SavedImageName[SavedImageName.rfind("."):]
-        valid_extensions = [".jpg", ".jpeg", ".png", ".gif"]
-        if file_extension.lower() not in valid_extensions:
-            print(RED + "Invalid file extension. Use .jpg, .jpeg, .png, or .gif" + RESET)
-            continue
-
-        if file_extension.lower() == ".jpg" or file_extension.lower() == ".jpeg":
-            ImageChoice.save(SavedImageName, "JPEG")
-        elif file_extension.lower() == ".png":
-            ImageChoice.save(SavedImageName, "PNG")
-        saved_image = Image.open(SavedImageName)
-        saved_image.show()
-
-        print(GREEN + f"Image has been saved as {SavedImageName}! " + RESET)
-        break
-else:
-    print("Thankyou, for editing an Image!")
