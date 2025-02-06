@@ -99,18 +99,22 @@ def filter(image):
             print("Pick one of the options correctly!")
 
 
+image_modified = False
 while True:
     print("---------------------EDITS-----------------------")
     print("1. Crop")
     print("2. Filter")
-    print("3. Enlarge/Shrink")
+    print("3. Scale")
     EditChoice = input()
     if EditChoice == 'Crop':
         ImageChoice = crop(ImageChoice)
+        image_modified = True
     elif EditChoice == 'Enlarge' or EditChoice == 'Shrink':
         ImageChoice = scale(ImageChoice)
+        image_modified = True
     elif EditChoice == 'Filter':
         ImageChoice = filter(ImageChoice)
+        image_modified = True
     else:
         print(RED + "Invalid choice" + RESET)
     print("Would you like to continue editing?")
@@ -119,8 +123,37 @@ while True:
         print(GREEN + "Great!" + RESET)
     else:
         break
+if image_modified:
+    print(GREEN + "Image has been modified" + RESET)
+else:
+    print("No modifications to image")
 
 
-# Minimum Requirements:
-#	- changing file type
-#   - save the new image!
+print("Would you like to save and/or change the image?")
+save_change = input()
+if save_change == "yes":
+    print(GREEN + "Now, lets save and/or change the image!" + RESET)
+    while True:
+        print("Enter name for new, edited image: " + BLUE + "eg. name.jpg or name.png" + RESET)
+        SavedImageName = input()
+        if "." not in SavedImageName:
+            print(RED + "Invalid Name, name must include \'.\': eg. .jpg or .png" + RESET)
+            continue
+
+        file_extension = SavedImageName[SavedImageName.rfind("."):]
+        valid_extensions = [".jpg", ".jpeg", ".png", ".gif"]
+        if file_extension.lower() not in valid_extensions:
+            print(RED + "Invalid file extension. Use .jpg, .jpeg, .png, or .gif" + RESET)
+            continue
+
+        if file_extension.lower() == ".jpg" or file_extension.lower() == ".jpeg":
+            ImageChoice.save(SavedImageName, "JPEG")
+        elif file_extension.lower() == ".png":
+            ImageChoice.save(SavedImageName, "PNG")
+        saved_image = Image.open(SavedImageName)
+        saved_image.show()
+
+        print(GREEN + f"Image has been saved as {SavedImageName}! " + RESET)
+        break
+else:
+    print("Thankyou, for editing an Image!")
