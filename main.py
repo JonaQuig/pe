@@ -20,9 +20,9 @@ while x == 100:
         PE_Start = 0
         while PE_Start == 0:
             # Method for user to select photo
-            print(GREEN + "What image would you like to edit? Buffalo, Elephant, or Bird")
+            print(GREEN + "What image would you like to edit? Buffalo, Elephant, or Bird?")
             IMAGE = input()
-            if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird' or "custom":
+            if IMAGE == 'Buffalo' or IMAGE == 'Elephant' or IMAGE == 'Bird':
                 print("Good choice!")
                 if IMAGE == 'Buffalo':
                     ImageChoice = im
@@ -30,19 +30,15 @@ while x == 100:
                     ImageChoice = im1
                 elif IMAGE == 'Bird':
                     ImageChoice = im2
-                elif IMAGE == 'custom':
-                    print("What would you like you image to be?")
-                    custom = input()
-                    ImageChoice = custom
                 PE_Start = 1
             elif IMAGE != 'Buffalo' and 'Elephant' and 'Bird':
                 print("You can't do that")
         if x == 100:
             x += 1
+
 ImageChoice.show()
 
 print(RESET + "Now that we have our image, lets make some edits!")
-
 
 def crop(image):
     # Give image size to help user choose crop values/coordinates
@@ -63,7 +59,6 @@ def crop(image):
             cropped_image.show()
             return cropped_image
 
-
 def scale(image):
     width, height = image.size
     while True:
@@ -81,7 +76,6 @@ def scale(image):
                 print(RED + "Wrong input. Is the input positive?" + RESET)
         else:
             print(RED + "Invalid input. Please enter a number." + RESET)
-
 
 def filter(image):
     print(GREEN + "What filter would you like?" + RESET)
@@ -102,7 +96,6 @@ def filter(image):
         else:
             print("Pick one of the options correctly!")
 
-
 while True:
     print("---------------------EDITS-----------------------")
     print("1. Crop")
@@ -119,11 +112,14 @@ while True:
         print(RED + "Invalid choice" + RESET)
     print("Would you like to continue editing?")
     answer = input()
-    if answer.lower() == 'yes':
+    if answer.lower() == 'yes':   #Continue Editing
         print(GREEN + "Great!" + RESET)
     else:
-        print("What would you like your image to be saved as? End with .jpg: eg. name.jpg")
+        print(GREEN + "Now that were done editing..." + RESET)   #Save new changed or unchanged image
+        print("What would you like your image to be saved as? " + BLUE + "End with file type such as .png or .jpg: " + RESET + "eg. image_name.jpg")
         SavedName = input()
         ImageChoice.save(SavedName)
+        print(f"Your image has been saved as \'{SavedName}\'.")
         break
 
+#possibly add that user could take their own image and edit it based on program.
